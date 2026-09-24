@@ -1,12 +1,21 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 import {
-    deleteProduct,
-    getCategories,
-    getProducts,
+  deleteProduct,
+  getCategories,
+  getProducts,
 } from "../../lib/productApi";
 
 import ConfirmModal from "../../components/ConfirmModal";
@@ -17,7 +26,7 @@ import ProductCard from "../../components/ProductCard";
 import ProductForm from "../../components/ProductForm";
 import ProductTable from "../../components/ProductTable";
 
-export default function DashboardPage() {
+function DashboardContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -750,5 +759,13 @@ export default function DashboardPage() {
         />
       )}
     </main>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <DashboardContent />
+    </Suspense>
   );
 }
